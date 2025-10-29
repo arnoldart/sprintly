@@ -21,6 +21,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@clerk/clerk-react": "^5.53.3",
     "@clerk/nextjs": "^6.32.2",
     "@hookform/resolvers": "^5.2.2",
     "@prisma/client": "^6.5.0",
