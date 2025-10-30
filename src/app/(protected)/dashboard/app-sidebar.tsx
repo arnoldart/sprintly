@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
+import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar'
 import { cn } from '@/lib/utils'
 import { Bot, CreditCard, LayoutDashboard, Plus, Presentation } from 'lucide-react'
 import Link from 'next/link'
@@ -45,6 +45,7 @@ const projects = [
 
 function AppSidebar() {
     const pathname = usePathname()
+    const {open} = useSidebar()
 
     return (
         <Sidebar collapsible='icon' variant='floating'>
@@ -95,14 +96,16 @@ function AppSidebar() {
                                 </SidebarMenuItem>
                             ))}
                             <div className='h-2'></div>
-                            <SidebarMenuItem>
+                            {open && (
+                              <SidebarMenuItem>
                                 <Link href="/create">
-                                    <Button size={'sm'} variant={"outline"} className='w-fit'>
-                                        <Plus />
-                                        New Project
-                                    </Button>
+                                  <Button size={'sm'} variant={"outline"} className='w-fit'>
+                                    <Plus />
+                                    New Project
+                                  </Button>
                                 </Link>
-                            </SidebarMenuItem>
+                              </SidebarMenuItem>
+                            )}
                         </SidebarMenu>
                     </SidebarGroupContent>
                 </SidebarGroup>
