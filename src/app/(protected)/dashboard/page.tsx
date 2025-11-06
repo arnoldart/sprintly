@@ -25,7 +25,29 @@ export default function DashboardPage() {
             </div>
           </div>
         </div>
+
+        <div className="h-4"></div>
+
+        <div className="flex items-center gap-4">
+          teammember
+          invitebutton
+          archivebutton
+        </div>
+
       </div>
+
+      <div className="mt-4">
+        <div className="grid grid-cols-1 sm:grid-cols-5 gap-4">
+          AskQuestion
+          Meetings
+        </div>
+      </div>
+
+
+      <div className="mt-8"></div>
+
+      CommitLOg
+      
     </div>
   )
 }
