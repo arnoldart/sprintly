@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import useRefetch from '@/hooks/use-refetch'
 import { api } from '@/trpc/react'
 import React from 'react'
 import { useForm } from 'react-hook-form'
@@ -16,7 +17,8 @@ type FormInput = {
 function CreateProjectPage() {
   const {register, handleSubmit, reset} = useForm<FormInput>()
   const createProject = api.project.createProject.useMutation()
-
+  const refetch = useRefetch()
+  
   const OnSubmit = (data: FormInput) => {
     createProject.mutate({
       githubUrl: data.repoUrl,
@@ -25,6 +27,7 @@ function CreateProjectPage() {
     }, {
       onSuccess: () => {
         toast.success('Project created successfully!')
+        refetch()
         reset()
       },
       onError: (err) => {
@@ -54,7 +57,7 @@ function CreateProjectPage() {
               {...register('projectName', {required: true})}
             />
             <Input 
-              placeholder='Repo Url'
+              placeholder='Github Repo'
               required
               {...register('repoUrl', {required: true})}
             />

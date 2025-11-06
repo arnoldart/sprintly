@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar'
+import useProject from '@/hooks/use-projects'
 import { cn } from '@/lib/utils'
 import { Bot, CreditCard, LayoutDashboard, Plus, Presentation } from 'lucide-react'
 import Link from 'next/link'
@@ -46,7 +47,8 @@ const projects = [
 function AppSidebar() {
     const pathname = usePathname()
     const {open} = useSidebar()
-
+    const {projects, projectId, setProjectId} = useProject()
+    
     return (
         <Sidebar collapsible='icon' variant='floating'>
             <SidebarHeader>
@@ -76,21 +78,21 @@ function AppSidebar() {
                     </SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
-                            {projects.map((project) => (
-                                <SidebarMenuItem key={project.title}>
+                            {projects?.map((project) => (
+                                <SidebarMenuItem className='cursor-pointer' key={project.name} onClick={() => setProjectId(project.id)}>
                                     <SidebarMenuButton asChild>
                                         <div>
                                             <div className={cn(
                                                 'rounded-sm border size-6 flex items-center justify-center text-sm bg-white text-primary',
                                                 {
-                                                    'bg-primary text-white': true
-                                                    // 'bg-primary text-white' : project.id === project.id
+                                                    // 'bg-primary text-white': true
+                                                    'bg-primary text-white' : project.id === projectId
 
                                                 }
                                             )}>
-                                                {project.title.charAt(0)}
+                                                {project.name.charAt(0)}
                                             </div>
-                                            {project.title}
+                                            {project.name}
                                         </div>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
