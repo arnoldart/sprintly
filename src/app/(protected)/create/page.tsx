@@ -63,8 +63,7 @@ function CreateProjectPage() {
             />
             <Input 
               placeholder='Github Token (optional)'
-              required
-              {...register('githubToken', {required: true})}
+              {...register('githubToken')}
             />
             <div className='h-2'></div>
             <Button type='submit' disabled={createProject.isPending}>

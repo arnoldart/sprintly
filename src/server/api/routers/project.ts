@@ -3,6 +3,7 @@ import { TRPCError } from "@trpc/server";
 import { type PrismaClient } from "@prisma/client";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { clerkClient } from "@clerk/nextjs/server";
+import { pullCommits } from "@/lib/github";
 
 /**
  * Get or create database user from Clerk user ID
@@ -75,6 +76,8 @@ export const projectRouter = createTRPCRouter({
 					},
 				},
 			});
+
+			await pullCommits(project.id);
 
 			return project;
 		}),

@@ -4,7 +4,7 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
 const genAI = new GoogleGenAI({apiKey: GEMINI_API_KEY});
 
-export const summarizeCommit = async (diff: string) => {
+export const aiSummarizeCommit = async (diff: string) => {
   const prompt = `You are an expert programmer. Summarize the git diff that follows.
 
 Instructions (output requirements):
@@ -21,13 +21,30 @@ Now summarize the following git diff:
 
   // Call the Gemini API and return the first text candidate as the summary
   const resp = await genAI.models.generateContent({
-    model: 'gemini-1.5-flash',
+    model: 'gemini-2.0-flash',
     contents: prompt,
   });
 
   // The API response shape may vary; prefer common fields and fallback to JSON
-  const r = resp as any;
-  const summary = r?.candidates?.[0]?.content ?? r?.content ?? JSON.stringify(resp);
-  return summary;
+  const text = resp.candidates?.[0]?.content?.parts?.[0]?.text ?? 
+    JSON.stringify(resp);
+
+  return text.trim();
 }
 
+// console.log(await summarizeCommit(`
+//   diff --git a/prisma/schema.prisma b/prisma/schema.prisma
+// index 3c083b8..f100414 100644
+// --- a/prisma/schema.prisma
+// +++ b/prisma/schema.prisma
+// @@ -3,6 +3,9 @@
+ 
+//  generator client {
+//      provider = "prisma-client-js"
+// +    // Include the runtime required by the dev container (debian-openssl-3.0.x)
+// +    // Keep native so local systems still work.
+// +    binaryTargets = ["native", "debian-openssl-3.0.x"]
+//  }
+ 
+//  datasource db {  
+// `))
