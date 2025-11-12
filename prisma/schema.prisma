@@ -3,6 +3,9 @@
 
 generator client {
     provider = "prisma-client-js"
+    // Include the runtime required by the dev container (debian-openssl-3.0.x)
+    // Keep `native` so local systems still work.
+    binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
 datasource db {
