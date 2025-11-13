@@ -4,13 +4,13 @@ import useProject from "@/hooks/use-projects"
 import { useUser } from "@clerk/clerk-react"
 import { ExternalLink, Github } from "lucide-react"
 import Link from "next/link"
+import CommitLog from "./commit-log"
 
 export default function DashboardPage() {
   const { project } = useProject()
 
   return (
     <div>
-      {project?.id}
       <div className="flex items-center justify-between flex-wrap gap-y-4">
         <div className="w-fit rounded-md bg-primary px-4 py-3">
           <div className="flex items-center">
@@ -47,7 +47,7 @@ export default function DashboardPage() {
 
       <div className="mt-8"></div>
 
-      CommitLOg
+      <CommitLog />
       
     </div>
   )

@@ -57,6 +57,7 @@ export const pullCommits = async (projectId: string) => {
 
   const commits = await db.commit.createMany({
     data: summaries.map((summary, index) => {
+      console.log("processing commit: ", index)
       return {
         projectId: projectId,
         commitHash: unprocessedCommits[index]?.commitHash || "",
@@ -73,10 +74,11 @@ export const pullCommits = async (projectId: string) => {
 }
 
 async function summarizeCommit(githubUrl: string, commitHash: string) {
+  console.log(`${githubUrl}/commit/${commitHash}.diff`)
+  console.log("INI COMMIT============================================================")
   const {data} = await axios.get(`${githubUrl}/commit/${commitHash}.diff`, {
     headers: {
       'Accept': 'application/vnd.github.v3.diff',
-      'Authorization': `token ${process.env.GITHUB_TOKEN}`
     }
   })
 
